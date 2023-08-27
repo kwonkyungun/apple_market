@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.apple_market.databinding.ItemBinding
+import java.text.DecimalFormat
 
 class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapter.Holder>() {
 
@@ -45,6 +46,8 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
     }
 
     inner class Holder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
         val iconImageView = binding.iconItem
         val title = binding.title
         val Address = binding.addressContent

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--모서리 동글게    -->
+    <corners
+        android:radius="30dp"/>
+    <!--내부 색상-->
+    <solid
+        android:color="#FFFFFF"/>
+    <size
+        android:width="120dp"
+        android:height="120dp"/>
+</shape>
