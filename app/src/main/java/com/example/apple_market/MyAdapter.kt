@@ -25,13 +25,16 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
     }//후발대 과제 추가 요망
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
+        val test = DecimalFormat("#,###")
+
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
         holder.iconImageView.setImageResource(mItems[position].aIcon)
         holder.title.text = mItems[position].aTitle
         holder.Address.text = mItems[position].aAddress
-        holder.price.text = mItems[position].aPrice.toString()
+        holder.price.text = test.format(mItems[position].aPrice)+"원"
         holder.chat.text = mItems[position].aChat.toString()
         holder.like.text = mItems[position].aLike.toString()
 
