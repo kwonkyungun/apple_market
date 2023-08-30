@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">apple_market</string>
+    <string name="temperature_mini"><u>매너온도</u></string>
+
 </resources>

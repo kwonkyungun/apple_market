@@ -8,11 +8,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.apple_market.databinding.ItemBinding
+import com.example.apple_market.databinding.MainItemBinding
 import java.text.DecimalFormat
 
 class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapter.Holder>() {
 
+    // 인터페이스는 Main의 183번째 줄 OnClick의 함수를 호출하기 위해 만들어줌
     interface ItemClick {
         fun onClick(view : View, position : Int)
     }
@@ -20,13 +21,13 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
     var itemClick : ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = MainItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
-    }//후발대 과제 추가 요망
+    }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        val test = DecimalFormat("#,###")
+
 
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
@@ -34,8 +35,11 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
         holder.iconImageView.setImageResource(mItems[position].aIcon)
         holder.title.text = mItems[position].aTitle
         holder.Address.text = mItems[position].aAddress
+
+        val test = DecimalFormat("#,###")
         holder.price.text = test.format(mItems[position].aPrice)+"원"
         holder.chat.text = mItems[position].aChat.toString()
+
         holder.like.text = mItems[position].aLike.toString()
 
     }
@@ -48,7 +52,7 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
         return mItems.size
     }
 
-    inner class Holder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class Holder(val binding: MainItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
 
         val iconImageView = binding.iconItem
