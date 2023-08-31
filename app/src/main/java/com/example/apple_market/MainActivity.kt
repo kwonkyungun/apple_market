@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.SyncStateContract
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -43,10 +44,11 @@ class MainActivity : AppCompatActivity() {
         val listener = object : DialogInterface.OnClickListener {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 when (p1) {
-                    DialogInterface.BUTTON_NEGATIVE ->
+                    DialogInterface.BUTTON_NEGATIVE ->   // 중앙 버튼
                         return
 
-                    DialogInterface.BUTTON_POSITIVE ->
+                    DialogInterface.BUTTON_POSITIVE ->   // 오른쪽 끝 버튼
+
                         finish()
                 }
             }
@@ -277,19 +279,31 @@ class MainActivity : AppCompatActivity() {
         )
 
         //스크롤 상단 이동
-        var isTop = true
+//        val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }    //애니메이션 객체 추가
+//        val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }   //애니메이션 객체 추가
+
+        var isTop = true  //최상단임을 알려주는 변수
         val up_pressed = findViewById<ImageView>(R.id.up_pressed)
 
         binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
+
+                //현재 리스트의 최상단을 검사하기 위해 if문을 사용
                 if (!binding.recyclerview.canScrollVertically(-1)
+                    //canScrollVertically(-1) 이면 최상단일 경우 true 값 리턴
                     && newState == RecyclerView.SCROLL_STATE_IDLE
-                ) {
+                ) {// 현재 스크롤되지 않은 상태임을 나타냄 , 이 조건에 추가해주는 이유는 스크롤에 인한 중복 발생을 방지하기 위해서이다.
+
+//                    binding.upPressed.startAnimation(fadeOut)         // 애니메이션 객체 추가
+//                    binding.upPressed.visibility = View.GONE          // 애니메이션 객체 추가
                     binding.upPressed.visibility = View.GONE
                     isTop = true
                 } else {
                     if (isTop) {
+                        //canScrollVertically(1) 최하단일 경우 false값 리턴
+//                        binding.upPressed.visibility = View.VISIBLE
+//                        binding.upPressed.startAnimation(fadeIn)
                         binding.upPressed.visibility = View.VISIBLE
                         isTop = false
 
@@ -297,8 +311,9 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-
+        //상단 스크롤 클릭 이벤트
         up_pressed.setOnClickListener {
+            //smoothScrollToPosition(0)을 통하여 리스트의 0번째 항목으로 이동
             binding.recyclerview.smoothScrollToPosition(0)
 
         }
@@ -319,9 +334,47 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("ITEM_INDEX", position)
                 intent.putExtra("ITEM_OBJECT", dataList[position])
                 startActivity(intent)
+            }
+        }
+        //아이템 길게 클릭했을 때 이벤트 설정
+        adapter.itemLongClick = object : MyAdapter.ItemLongClick {
+            override fun LongCick(view: View, position: Int) {
+                //다이얼로그 UI
+                var builder = AlertDialog.Builder(this@MainActivity)
+                builder.setTitle("상품삭제")
+                builder.setMessage("상품을 정말로 삭제하시겠습니까?")
+                builder.setIcon(R.drawable.chat_image)
+                //버튼 클릭 시 작업 내용
+                builder.setPositiveButton("확인") { dialog, _ ->
+                    dataList.removeAt(position)
+                    adapter.notifyDataSetChanged()
+                }
+                builder.setNegativeButton("취소") { dialog, _ ->
+                    return@setNegativeButton
+                }
+                builder.show()
+
+
+//                val listener = object : DialogInterface.OnClickListener {
+//                    override fun LongClick(p0: DialogInterface?, p1: Int) {
+//                        when (p1) {
+//                            DialogInterface.BUTTON_NEGATIVE ->
+//                                return
+//
+//                            DialogInterface.BUTTON_POSITIVE ->
+//                                dataList.removeAt(position)
+////                                adapter.notifyDataSetChanged()
+//                        }
+//                    }
+//
+//                }
+//                builder.setNegativeButton("취소", null)
+//                builder.setPositiveButton("확인", listener)
+//                builder.show()
+//            }
 
             }
+
         }
     }
 }
-

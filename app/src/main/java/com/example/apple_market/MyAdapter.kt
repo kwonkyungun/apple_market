@@ -17,8 +17,14 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
     interface ItemClick {
         fun onClick(view : View, position : Int)
     }
+    interface ItemLongClick {
+        fun LongCick(view : View, position : Int)
+//        notifyDataSetChanged()
+    }
 
+    var itemLongClick: ItemLongClick? = null
     var itemClick : ItemClick? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = MainItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -27,11 +33,14 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-
-
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+        holder.itemView.setOnLongClickListener{
+            itemLongClick?.LongCick(it,position)
+            return@setOnLongClickListener true
+        }
+
         holder.iconImageView.setImageResource(mItems[position].aIcon)
         holder.title.text = mItems[position].aTitle
         holder.Address.text = mItems[position].aAddress
