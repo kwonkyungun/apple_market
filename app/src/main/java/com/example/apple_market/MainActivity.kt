@@ -354,25 +354,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 builder.show()
 
-
-//                val listener = object : DialogInterface.OnClickListener {
-//                    override fun LongClick(p0: DialogInterface?, p1: Int) {
-//                        when (p1) {
-//                            DialogInterface.BUTTON_NEGATIVE ->
-//                                return
-//
-//                            DialogInterface.BUTTON_POSITIVE ->
-//                                dataList.removeAt(position)
-////                                adapter.notifyDataSetChanged()
-//                        }
-//                    }
-//
-//                }
-//                builder.setNegativeButton("취소", null)
-//                builder.setPositiveButton("확인", listener)
-//                builder.show()
-//            }
-
             }
 
         }

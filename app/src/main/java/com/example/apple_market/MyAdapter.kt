@@ -13,13 +13,13 @@ import java.text.DecimalFormat
 
 class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapter.Holder>() {
 
-    // 인터페이스는 Main의 183번째 줄 OnClick의 함수를 호출하기 위해 만들어줌
+    // 인터페이스는 Main의 OnClick 함수를 호출하기 위해 만들어줌
     interface ItemClick {
         fun onClick(view : View, position : Int)
     }
+    // 인터페이스는 Main의 LongCick 함수를 호출하기 위해 만들어줌
     interface ItemLongClick {
         fun LongCick(view : View, position : Int)
-//        notifyDataSetChanged()
     }
 
     var itemLongClick: ItemLongClick? = null
@@ -33,9 +33,11 @@ class MyAdapter(val mItems: MutableList<MyItem>) : RecyclerView.Adapter<MyAdapte
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
+        //아이템 클릭
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+        //아이템 길게 클릭
         holder.itemView.setOnLongClickListener{
             itemLongClick?.LongCick(it,position)
             return@setOnLongClickListener true

@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="20dp"
-                    android:text="매너온도"
+                    android:text="@string/temperature_mini"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView31" />
             </androidx.constraintlayout.widget.ConstraintLayout>
